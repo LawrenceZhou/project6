@@ -32,6 +32,8 @@
  */
 
 var mongoose = require('mongoose');
+var Types = mongoose.Types;
+var ObjectId = Types.ObjectId;
 var async = require('async');
 
 
