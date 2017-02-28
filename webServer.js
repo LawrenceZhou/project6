@@ -218,7 +218,7 @@ app.get('/photosOfUser/:id', function (request, response) {
                 return;
             }
 
-            var p;
+            /*var p;
             async.each(photo, function (pho) {
                 p = pho;
                 async.each(p.comments, function(com){
@@ -230,7 +230,7 @@ app.get('/photosOfUser/:id', function (request, response) {
                     delete 
                     p.comments.push(c);
                 });
-            });
+            });*/
 
 
             
