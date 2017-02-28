@@ -218,8 +218,18 @@ app.get('/photosOfUser/:id', function (request, response) {
                 return;
             }
 
+            /*async.each(photo, function (pho) {
+                async.each(pho.comments, function(com){
+
+                })
+                pho.coll.count({}, function (err, count) {
+                col.count = count;
+
+            });
+        });*/
+
             
-            console.log('PhotoList', photo, photo.type, photo[0].comments.type);
+            console.log('PhotoList', photo, photo.comments[0]);
             response.status(200).send(photo);
         });
     }else {
