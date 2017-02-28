@@ -132,7 +132,7 @@ app.get('/user/list', function (request, response) {
     //response.status(200).send(cs142models.userListModel());
 
     // Fetch the SchemaInfo. There should only one of them. The query of {} will match it.
-        User.find({}, function (err, user) {
+        User.find({}, { _id : 1, first_name : 1, last_name : 1 },function (err, user) {
             if (err) {
                 // Query returned an error.  We pass it back to the browser with an Internal Service
                 // Error (500) error code.
@@ -148,7 +148,7 @@ app.get('/user/list', function (request, response) {
             }
 
             // We got the object - return it in JSON format.
-           var userSubset = [];
+           /*var userSubset = [];
            for (var i =0; i < user.length; i++) {
             var newU = {};
             newU._id = user[i]._id;
@@ -158,7 +158,8 @@ app.get('/user/list', function (request, response) {
             userSubset.push(newU);
            }
             console.log('UserList', user, userSubset);
-            response.end(JSON.stringify(userSubset));
+            response.end(JSON.stringify(userSubset));*/
+            response.end(JSON.stringify(user));
         });
 });
 
