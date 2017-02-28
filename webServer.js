@@ -191,12 +191,12 @@ app.get('/user/:id', function (request, response) {
             }
 
             var newU = {};
-            newU._id = user[i]._id;
-            newU.first_name = user[i].first_name;
-            newU.last_name = user[i].last_name;
-            newU.description = user[i].description;
-            newU.location = user[i].location;
-            newU.occupation= user[i].occupation;
+            newU._id = user._id;
+            newU.first_name = user.first_name;
+            newU.last_name = user.last_name;
+            newU.description = user.description;
+            newU.location = user.location;
+            newU.occupation= user.occupation;
             console.log(newU);
 
             // We got the object - return it in JSON format.
@@ -224,16 +224,4 @@ var server = app.listen(3000, function () {
     var port = server.address().port;
     console.log('Listening at http://localhost:' + port + ' exporting the directory ' + __dirname);
 });
-
-function pick(data, keys) {
-  var result = {};
-  
-  keys.forEach(function (key) {
-    if (data.hasOwnProperty(key)) {
-      result[key] = data[key];
-    }
-  });
-  
-  return result;
-}
 
