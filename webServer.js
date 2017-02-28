@@ -129,7 +129,7 @@ app.get('/test/:p1', function (request, response) {
  * URL /user/list - Return all the User object.
  */
 app.get('/user/list', function (request, response) {
-    response.status(200).send(cs142models.userListModel());
+    //response.status(200).send(cs142models.userListModel());
 
     // Fetch the SchemaInfo. There should only one of them. The query of {} will match it.
         User.find({}, function (err, user) {
