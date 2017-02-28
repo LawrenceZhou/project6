@@ -164,6 +164,7 @@ app.get('/user/:id', function (request, response) {
     response.status(200).send(user);*/
 
     // Fetch the SchemaInfo. There should only one of them. The query of {} will match it.
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
         User.findOne({_id: id}, {__v : 0}, function (err, user) {
             if (err) {
                 // Query returned an error.  We pass it back to the browser with an Internal Service
@@ -180,6 +181,11 @@ app.get('/user/:id', function (request, response) {
 
             response.end(JSON.stringify(user));
         });
+    }else {
+    response.status(400).send('Not found');
+    return;
+
+    }
 });
 
 /*
@@ -217,8 +223,6 @@ app.get('/photosOfUser/:id', function (request, response) {
             response.status(200).send(photo);
         });
     }else {
-        console.log('id', id);
-
     response.status(400).send('Not found');
     return;
 
