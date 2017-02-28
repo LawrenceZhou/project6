@@ -218,14 +218,18 @@ app.get('/photosOfUser/:id', function (request, response) {
                 return;
             }
 
+            var p;
             async.each(photo, function (pho) {
-                async.each(pho.comments, function(com){
-                    com.user = User.find({id : com.user_id}, { _id : 1, first_name : 1, last_name : 1}, function(err, user) {
+                p = pho;
+                async.each(p.comments, function(com){
+                    var c = com;
+                    c.user = User.find({id : c.user_id}, { _id : 1, first_name : 1, last_name : 1}, function(err, user) {
                         //com.user = user;
                         //console.log('comment', com);
                     });
-                    console.log('comment', com)
-                    delete com.user_id;
+                    console.log('comment', c)
+                    delete c.user_id;
+                    p.comments.push(c);
                 });
             });
 
