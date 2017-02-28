@@ -148,8 +148,8 @@ app.get('/user/list', function (request, response) {
             }
 
             // We got the object - return it in JSON format.
-            console.log('UserList', user[0]);
-            response.end(JSON.stringify(user[0]));
+            console.log('UserList', user);
+            response.end(JSON.stringify(user));
         });
 });
 
