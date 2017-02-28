@@ -245,10 +245,10 @@ app.get('/photosOfUser/:id', function (request, response) {
             newP.date_time = photo[i].date_time;
             newP.comments = photo[i].comments;
             console.log(newP);
-            userSubset.push(newP);
+            photoSubset.push(newP);
            }
-            console.log('PhotoList', photo);
-            response.end(JSON.stringify(photo));
+            console.log('PhotoList', photoSubset);
+            response.end(JSON.stringify(photoSubset));
         });
 });
 
