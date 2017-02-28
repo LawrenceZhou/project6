@@ -167,13 +167,13 @@ app.get('/user/list', function (request, response) {
  */
 app.get('/user/:id', function (request, response) {
     var id = request.params.id;
-    /*var user = cs142models.userModel(id);
+    var user = cs142models.userModel(id);
     if (user === null) {
         console.log('User with _id:' + id + ' not found.');
         response.status(400).send('Not found');
         return;
     }
-    response.status(200).send(user);*/
+    response.status(200).send(user);
 
     // Fetch the SchemaInfo. There should only one of them. The query of {} will match it.
         User.findOne({_id: id}, function (err, user) {
@@ -191,7 +191,6 @@ app.get('/user/:id', function (request, response) {
             }
 
             // We got the object - return it in JSON format.
-           }
             console.log('User', user);
             response.end(JSON.stringify(user));
         });
