@@ -217,6 +217,36 @@ app.get('/photosOfUser/:id', function (request, response) {
         return;
     }
     response.status(200).send(photos);
+
+
+    Photo.find({}, function (err, photo) {
+            if (err) {
+                // Query returned an error.  We pass it back to the browser with an Internal Service
+                // Error (500) error code.
+                console.error('Doing /photosOfUser/:id error:', err);
+                response.status(500).send(JSON.stringify(err));
+                return;
+            }
+            if (photo.length === 0) {
+                // Query didn't return an error but didn't find the SchemaInfo object - This
+                // is also an internal error return.
+                response.status(400).send('Not found');
+                return;
+            }
+
+            // We got the object - return it in JSON format.
+           /*var photoSubset = [];
+           for (var i =0; i < photo.length; i++) {
+            var newP = {};
+            newU._id = user[i]._id;
+            newU.first_name = user[i].first_name;
+            newU.last_name = user[i].last_name;
+            console.log(newU);
+            userSubset.push(newU);
+           }*/
+            console.log('PhotoList', photo);
+            response.end(JSON.stringify(photo));
+        });
 });
 
 
