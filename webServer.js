@@ -178,18 +178,6 @@ app.get('/user/:id', function (request, response) {
                 return;
             }
 
-            /*var newU = {};
-            newU._id = user._id;
-            newU.first_name = user.first_name;
-            newU.last_name = user.last_name;
-            newU.description = user.description;
-            newU.location = user.location;
-            newU.occupation= user.occupation;
-            console.log(newU);
-
-            // We got the object - return it in JSON format.
-            console.log('User', newU);
-            response.end(JSON.stringify(newU));*/
             response.end(JSON.stringify(user));
         });
 });
@@ -209,7 +197,7 @@ app.get('/photosOfUser/:id', function (request, response) {
     */
 
 
-    Photo.find({user_id: id}, function (err, photo) {
+    Photo.find({user_id: id}, {__v : 0}, function (err, photo) {
             if (err) {
                 // Query returned an error.  We pass it back to the browser with an Internal Service
                 // Error (500) error code.
@@ -224,20 +212,8 @@ app.get('/photosOfUser/:id', function (request, response) {
                 return;
             }
 
-            // We got the object - return it in JSON format.
-           var photoSubset = [];
-           for (var i =0; i < photo.length; i++) {
-            var newP = {};
-            newP._id = photo[i]._id;
-            newP.user_id = photo[i].user_id;
-            newP.file_name = photo[i].file_name;
-            newP.date_time = photo[i].date_time;
-            newP.comments = photo[i].comments;
-            console.log(newP);
-            photoSubset.push(newP);
-           }
-            console.log('PhotoList', photoSubset);
-            response.end(JSON.stringify(photoSubset));
+            console.log('PhotoList', photo);
+            response.end(JSON.stringify(photo));
         });
 });
 
