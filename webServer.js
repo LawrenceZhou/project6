@@ -181,7 +181,7 @@ app.get('/user/:id', function (request, response) {
                 // Query returned an error.  We pass it back to the browser with an Internal Service
                 // Error (500) error code.
                 console.error('Doing /user/list error:', err);
-                response.status(500).send(JSON.stringify(err));
+                response.status(400).send(JSON.stringify(err));
                 return;
             }
             if (user === null) {
