@@ -191,8 +191,8 @@ app.get('/user/:id', function (request, response) {
             }
 
             // We got the object - return it in JSON format.
-            console.log('User', user);
-            response.end(JSON.stringify(user));
+            console.log('User', user[0]);
+            response.end(JSON.stringify(user[0]));
         });
 });
 
