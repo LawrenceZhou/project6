@@ -148,8 +148,9 @@ app.get('/user/list', function (request, response) {
             }
 
             // We got the object - return it in JSON format.
-            console.log('UserList', user);
-            response.end(JSON.stringify(user));
+           var userSubset = _.pick(user ,'_id', 'first_name', 'last_name');
+            console.log('UserList', user, userSubset);
+            response.end(JSON.stringify(userSubset));
         });
 });
 
