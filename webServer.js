@@ -146,19 +146,6 @@ app.get('/user/list', function (request, response) {
                 response.status(500).send('Missing UserList');
                 return;
             }
-
-            // We got the object - return it in JSON format.
-           /*var userSubset = [];
-           for (var i =0; i < user.length; i++) {
-            var newU = {};
-            newU._id = user[i]._id;
-            newU.first_name = user[i].first_name;
-            newU.last_name = user[i].last_name;
-            console.log(newU);
-            userSubset.push(newU);
-           }
-            console.log('UserList', user, userSubset);
-            response.end(JSON.stringify(userSubset));*/
             response.end(JSON.stringify(user));
         });
 });
@@ -177,7 +164,7 @@ app.get('/user/:id', function (request, response) {
     response.status(200).send(user);*/
 
     // Fetch the SchemaInfo. There should only one of them. The query of {} will match it.
-        User.findOne({_id: id}, function (err, user) {
+        User.findOne({_id: id}, {__v : 0}, function (err, user) {
             if (err) {
                 // Query returned an error.  We pass it back to the browser with an Internal Service
                 // Error (500) error code.
@@ -191,7 +178,7 @@ app.get('/user/:id', function (request, response) {
                 return;
             }
 
-            var newU = {};
+            /*var newU = {};
             newU._id = user._id;
             newU.first_name = user.first_name;
             newU.last_name = user.last_name;
@@ -202,7 +189,8 @@ app.get('/user/:id', function (request, response) {
 
             // We got the object - return it in JSON format.
             console.log('User', newU);
-            response.end(JSON.stringify(newU));
+            response.end(JSON.stringify(newU));*/
+            response.end(JSON.stringify(user));
         });
 });
 
