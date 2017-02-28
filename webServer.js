@@ -220,7 +220,7 @@ app.get('/photosOfUser/:id', function (request, response) {
     */
 
 
-    Photo.find({user_id: id}, function (err, photo) {
+    Photo.find({user_id: mangoose.Types.ObjectId(id)}, function (err, photo) {
             if (err) {
                 // Query returned an error.  We pass it back to the browser with an Internal Service
                 // Error (500) error code.
