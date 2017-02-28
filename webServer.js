@@ -148,7 +148,12 @@ app.get('/user/list', function (request, response) {
             }
 
             // We got the object - return it in JSON format.
-           var userSubset = _.pick(user ,'_id', 'first_name', 'last_name');
+           var userSubset = [];
+           for (u in user) {
+            var newU = pick(u, ['i_d', 'first_name', 'last_name']);
+                console.log(newU);
+                userSubset.push(newU);
+           }
             console.log('UserList', user, userSubset);
             response.end(JSON.stringify(userSubset));
         });
@@ -188,4 +193,15 @@ var server = app.listen(3000, function () {
     console.log('Listening at http://localhost:' + port + ' exporting the directory ' + __dirname);
 });
 
+function pick(data, keys) {
+  var result = {};
+  
+  keys.forEach(function (key) {
+    if (data.hasOwnProperty(key)) {
+      result[key] = data[key];
+    }
+  });
+  
+  return result;
+}
 
