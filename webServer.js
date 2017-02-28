@@ -32,8 +32,6 @@
  */
 
 var mongoose = require('mongoose');
-var Types = mongoose.Types;
-var ObjectId = Types.ObjectId;
 var async = require('async');
 
 
@@ -222,7 +220,7 @@ app.get('/photosOfUser/:id', function (request, response) {
     */
 
 
-    Photo.find({user_id: mangoose.Types.ObjectId(id)}, function (err, photo) {
+    Photo.find({user_id: id}, function (err, photo) {
             if (err) {
                 // Query returned an error.  We pass it back to the browser with an Internal Service
                 // Error (500) error code.
@@ -230,7 +228,7 @@ app.get('/photosOfUser/:id', function (request, response) {
                 response.status(500).send(JSON.stringify(err));
                 return;
             }
-            if (photo.length === 0) {
+            if (photo === null) {
                 // Query didn't return an error but didn't find the SchemaInfo object - This
                 // is also an internal error return.
                 response.status(400).send('Not found');
@@ -238,14 +236,16 @@ app.get('/photosOfUser/:id', function (request, response) {
             }
 
             // We got the object - return it in JSON format.
-           /*var photoSubset = [];
+           var photoSubset = [];
            for (var i =0; i < photo.length; i++) {
             var newP = {};
-            newU._id = user[i]._id;
-            newU.first_name = user[i].first_name;
-            newU.last_name = user[i].last_name;
-            console.log(newU);
-            userSubset.push(newU);
+            newP._id = photo[i]._id;
+            newP.user_id = photo[i].user_id;
+            newP.file_name = photo[i].file_name;
+            newP.date_time = photo[i].date_time;
+            newP.comments = photo[i].comments;
+            console.log(newP);
+            userSubset.push(newP);
            }*/
             console.log('PhotoList', photo);
             response.end(JSON.stringify(photo));
