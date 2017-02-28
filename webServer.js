@@ -212,8 +212,10 @@ app.get('/photosOfUser/:id', function (request, response) {
                 return;
             }
 
+
+
             console.log('PhotoList', photo);
-            response.end(JSON.stringify(photo));
+            response.status(200).send(photo);
         });
     }
 
