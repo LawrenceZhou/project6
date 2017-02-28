@@ -210,13 +210,14 @@ app.get('/user/:id', function (request, response) {
  */
 app.get('/photosOfUser/:id', function (request, response) {
     var id = request.params.id;
-    var photos = cs142models.photoOfUserModel(id);
+    /*var photos = cs142models.photoOfUserModel(id);
     if (photos.length === 0) {
         console.log('Photos for user with _id:' + id + ' not found.');
         response.status(400).send('Not found');
         return;
     }
     response.status(200).send(photos);
+    */
 
 
     Photo.find({user_id: id}, function (err, photo) {
