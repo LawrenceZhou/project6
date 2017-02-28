@@ -149,8 +149,8 @@ app.get('/user/list', function (request, response) {
 
             // We got the object - return it in JSON format.
            var userSubset = [];
-           for (u in user) {
-            var newU = pick(u, ['i_d', 'first_name', 'last_name']);
+           for (var i =0; i < user.length; i++) {
+            var newU = pick(user[i], ['i_d', 'first_name', 'last_name']);
                 console.log(newU);
                 userSubset.push(newU);
            }
