@@ -217,6 +217,7 @@ app.get('/photosOfUser/:id', function (request, response) {
             response.status(200).send(photo);
         });
     }else {
+        console.log('id', id);
 
     response.status(400).send('Not found');
     return;
