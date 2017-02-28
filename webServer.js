@@ -219,7 +219,7 @@ app.get('/photosOfUser/:id', function (request, response) {
     response.status(200).send(photos);
 
 
-    Photo.find({}, function (err, photo) {
+    Photo.find({user_id: id}, function (err, photo) {
             if (err) {
                 // Query returned an error.  We pass it back to the browser with an Internal Service
                 // Error (500) error code.
