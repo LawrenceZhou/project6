@@ -196,8 +196,8 @@ app.get('/photosOfUser/:id', function (request, response) {
     response.status(200).send(photos);
     */
 
-
-    Photo.find({user_id: id}, {__v : 0}, function (err, photo) {
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+        Photo.find({user_id: id}, {__v : 0}, function (err, photo) {
             if (err) {
                 // Query returned an error.  We pass it back to the browser with an Internal Service
                 // Error (500) error code.
@@ -215,6 +215,12 @@ app.get('/photosOfUser/:id', function (request, response) {
             console.log('PhotoList', photo);
             response.end(JSON.stringify(photo));
         });
+    }
+
+    response.status(400).send('Not found');
+    return;
+
+    
 });
 
 
