@@ -222,6 +222,7 @@ app.get('/photosOfUser/:id', function (request, response) {
                 async.each(pho.comments, function(com){
                     User.find({id : com.user_id}, { _id : 1, first_name : 1, last_name : 1}, function(err, user) {
                         com.user = user;
+                        console.log('comment', com);
                     });
                     delete com.user_id;
                 });
