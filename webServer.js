@@ -229,7 +229,7 @@ app.get('/photosOfUser/:id', function (request, response) {
         });*/
 
             
-            console.log('PhotoList', photo, photo[0].comments);
+            console.log('PhotoList', photo);
             response.status(200).send(photo);
         });
     }else {
