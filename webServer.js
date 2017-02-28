@@ -224,6 +224,7 @@ app.get('/photosOfUser/:id', function (request, response) {
                         //com.user = user;
                         //console.log('comment', com);
                     });
+                    console.log('comment', com)
                     delete com.user_id;
                 });
             });
