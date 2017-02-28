@@ -218,15 +218,15 @@ app.get('/photosOfUser/:id', function (request, response) {
                 return;
             }
 
-            /*async.each(photo, function (pho) {
+            async.each(photo, function (pho) {
                 async.each(pho.comments, function(com){
-
-                })
-                pho.coll.count({}, function (err, count) {
-                col.count = count;
-
+                    User.find({id : com.user_id}, { _id : 1, first_name : 1, last_name : 1}, function(err, user) {
+                        com.user = user;
+                    });
+                    delete com.user_id;
+                });
             });
-        });*/
+
 
             
             console.log('PhotoList', photo[0].comments);
