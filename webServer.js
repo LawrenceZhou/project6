@@ -212,7 +212,34 @@ app.get('/photosOfUser/:id', function (request, response) {
                 return;
             }
 
+            async.each(photo.comments, function (com, done_callback) {
+            com.findOne({_id: com.id}, {_id : 1, first_name : 1, last_name : 1 }, function (err, user) {
+                if (err) {
+                // Query returned an error.  We pass it back to the browser with an Internal Service
+                // Error (500) error code.
+                console.error('Doing /user/list error:', err);
+                response.status(400).send(JSON.stringify(err));
+                return;
+            }
+            if (user === null) {
+                console.log('User with _id:' + id + ' not found.');
+                response.status(400).send('Not found');
+                return;
+            }
+            
+            });
+        }, function (err) {
+            if (err) {
+                response.status(500).send(JSON.stringify(err));
+            } else {
+                var obj = {};
+                for (var i = 0; i < collections.length; i++) {
+                    obj[collections[i].name] = collections[i].count;
+                }
+                response.end(JSON.stringify(obj));
 
+            }
+        });
 
             console.log('PhotoList', photo);
             response.status(200).send(photo);
@@ -221,7 +248,7 @@ app.get('/photosOfUser/:id', function (request, response) {
 
     response.status(400).send('Not found');
     return;
-    
+
     }
 
     
