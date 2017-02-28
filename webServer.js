@@ -167,13 +167,34 @@ app.get('/user/list', function (request, response) {
  */
 app.get('/user/:id', function (request, response) {
     var id = request.params.id;
-    var user = cs142models.userModel(id);
+    /*var user = cs142models.userModel(id);
     if (user === null) {
         console.log('User with _id:' + id + ' not found.');
         response.status(400).send('Not found');
         return;
     }
-    response.status(200).send(user);
+    response.status(200).send(user);*/
+
+    // Fetch the SchemaInfo. There should only one of them. The query of {} will match it.
+        User.findOne({_id: id}, function (err, user) {
+            if (err) {
+                // Query returned an error.  We pass it back to the browser with an Internal Service
+                // Error (500) error code.
+                console.error('Doing /user/list error:', err);
+                response.status(500).send(JSON.stringify(err));
+                return;
+            }
+            if (user.length === 0) {
+                console.log('User with _id:' + id + ' not found.');
+                response.status(400).send('Not found');
+                return;
+            }
+
+            // We got the object - return it in JSON format.
+           }
+            console.log('User', user);
+            response.end(JSON.stringify(user));
+        });
 });
 
 /*
