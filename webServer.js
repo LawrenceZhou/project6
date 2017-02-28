@@ -246,7 +246,7 @@ app.get('/photosOfUser/:id', function (request, response) {
             newP.comments = photo[i].comments;
             console.log(newP);
             userSubset.push(newP);
-           }*/
+           }
             console.log('PhotoList', photo);
             response.end(JSON.stringify(photo));
         });
