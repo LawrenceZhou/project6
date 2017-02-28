@@ -223,19 +223,18 @@ app.get('/photosOfUser/:id', function (request, response) {
                 p = pho;
                 async.each(p.comments, function(com){
                     var c = com;
-                    c.user = User.find({id : c.user_id}, { _id : 1, first_name : 1, last_name : 1}, function(err, user) {
-                        //com.user = user;
-                        //console.log('comment', com);
-                    });
-                    console.log('comment', c)
+                    var u = User.findOne({id : c.user_id}, { _id : 1, first_name : 1, last_name : 1});
+                    c.user = u;
+                    console.log('comment', u, c);
                     delete c.user_id;
+                    delete 
                     p.comments.push(c);
                 });
             });
 
 
             
-            console.log('PhotoList', photo);
+            //console.log('PhotoList', photo);
             response.status(200).send(photo);
         });
     }else {
