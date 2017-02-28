@@ -226,19 +226,12 @@ app.get('/photosOfUser/:id', function (request, response) {
                 response.status(400).send('Not found');
                 return;
             }
-            
+
             });
         }, function (err) {
             if (err) {
                 response.status(500).send(JSON.stringify(err));
-            } else {
-                var obj = {};
-                for (var i = 0; i < collections.length; i++) {
-                    obj[collections[i].name] = collections[i].count;
-                }
-                response.end(JSON.stringify(obj));
-
-            }
+            } 
         });
 
             console.log('PhotoList', photo);
