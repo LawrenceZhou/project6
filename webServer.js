@@ -256,7 +256,6 @@ app.get('/photosOfUser/:id', function (request, response) {
                 }
             });
         });
-        });
     }else {
     response.status(400).send('Not found');
     return;
