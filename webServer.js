@@ -203,39 +203,59 @@ app.get('/photosOfUser/:id', function (request, response) {
     */
 
     if (id.match(/^[0-9a-fA-F]{24}$/)) {
-        Photo.find({user_id: id}, {__v : 0}, function (err, photo) {
+        var photoClone;
+
+        Photo.find({user_id: id}, {__v: 0}, function (err, photoList) {
             if (err) {
-                // Query returned an error.  We pass it back to the browser with an Internal Service
-                // Error (500) error code.
-                console.error('Doing /photosOfUser/:id error:', err);
+                console.error('Doing /photo/id error:', err);
                 response.status(400).send(JSON.stringify(err));
                 return;
             }
-            if (photo === null) {
-                // Query didn't return an error but didn't find the SchemaInfo object - This
-                // is also an internal error return.
+            if (photoList === null) {
+                console.log('Photos for user with _id:' + id + ' not found.');
                 response.status(400).send('Not found');
                 return;
             }
 
-            /*var p;
-            async.each(photo, function (pho) {
-                p = pho;
-                async.each(p.comments, function(com){
-                    var c = com;
-                    var u = User.findOne({id : c.user_id}, { _id : 1, first_name : 1, last_name : 1});
-                    c.user = u;
-                    console.log('comment', u, c);
-                    delete c.user_id;
-                    delete 
-                    p.comments.push(c);
+            photoClone = JSON.parse(JSON.stringify(photoList));
+
+            async.each(photoClone, function (photo, done_callback_photo) {
+                async.each(photo.comments, function (comment, done_callback_comment) {
+                    var userId = comment.user_id;
+                    var corresUser = {};
+                    User.findOne({_id: userId}, function (err, user) {
+                        if (err) {
+                            console.error('Doing /user/list error:', err);
+                            response.status(400).send(JSON.stringify(err));
+                            return;
+                        }
+                        if (user === null) {
+                            response.status(400).send('Missing User');
+                            return;
+                        }
+                        corresUser._id = user.id;
+                        corresUser.first_name = user.first_name;
+                        corresUser.last_name = user.last_name;
+
+                        comment.user = corresUser;
+                        delete comment.user_id;
+                        done_callback_comment(err);
+                    });
+                }, function (err) {
+                    if (err) {
+                        response.status(400).send(JSON.stringify(err));
+                    } 
+                    done_callback_photo(err);
                 });
-            });*/
-
-
-            
-            //console.log('PhotoList', photo);
-            response.status(200).send(photo);
+            }, function (err) {
+                if (err) {
+                        response.status(400).send(JSON.stringify(err));
+                    } 
+                else {
+                    response.status(200).send(photoClone);
+                }
+            });
+        });
         });
     }else {
     response.status(400).send('Not found');
