@@ -44,7 +44,7 @@ var express = require('express');
 var app = express();
 
 // XXX - Your submission should work without this line
-var cs142models = require('./modelData/photoApp.js').cs142models;
+//var cs142models = require('./modelData/photoApp.js').cs142models;
 
 mongoose.connect('mongodb://localhost/cs142project6');
 
