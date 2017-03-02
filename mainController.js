@@ -57,9 +57,10 @@ cs142App.controller('MainController', ['$scope', '$resource',
         };
 
         var version = $resource('http://localhost:3000/test/info');
-        $scope.main.version = version.get({}, function() {
-            $scope.main.version.$save();
+        var object = version.get({}, function() {
+            object.$save();
         });
+        $scope.main.version = object.__v;
 
 
         /*$scope.FetchModel("http://localhost:3000/test/info", function(model){
