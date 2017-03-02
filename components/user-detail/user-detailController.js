@@ -22,7 +22,7 @@ cs142App.controller('UserDetailController', ['$scope', '$routeParams', '$resourc
     });*/
 
     var user = $resource('http://localhost:3000/user/:id', {}, {});
-        var object = version.get({id: userId}, function() {
+        var object = user.get({id: userId}, function() {
             $scope.user = object;
             var firstName = $scope.user.first_name;
             var lastName = $scope.user.last_name;
