@@ -131,19 +131,19 @@ app.get('/test/:p1', function (request, response) {
 app.get('/user/list', function (request, response) {
     //response.status(200).send(cs142models.userListModel());
 
-    // Fetch the SchemaInfo. There should only one of them. The query of {} will match it.
+    // Fetch the user list. 
         User.find({}, { _id : 1, first_name : 1, last_name : 1 },function (err, user) {
             if (err) {
                 // Query returned an error.  We pass it back to the browser with an Internal Service
                 // Error (500) error code.
                 console.error('Doing /user/list error:', err);
-                response.status(500).send(JSON.stringify(err));
+                response.status(400).send(JSON.stringify(err));
                 return;
             }
             if (user.length === 0) {
-                // Query didn't return an error but didn't find the SchemaInfo object - This
+                // Query didn't return an error but didn't find the userlist object - This
                 // is also an internal error return.
-                response.status(500).send('Missing UserList');
+                response.status(400).send('Missing UserList');
                 return;
             }
             response.end(JSON.stringify(user));
@@ -168,21 +168,21 @@ app.get('/user/:id', function (request, response) {
         User.findOne({_id: id}, {__v : 0}, function (err, user) {
             if (err) {
                 // Query returned an error.  We pass it back to the browser with an Internal Service
-                // Error (500) error code.
-                console.error('Doing /user/list error:', err);
+                // Error (400) error code.
+                console.error('Doing /user/:id error:', err);
                 response.status(400).send(JSON.stringify(err));
                 return;
             }
             if (user === null) {
                 console.log('User with _id:' + id + ' not found.');
-                response.status(400).send('Not found');
+                response.status(400).send('User not found');
                 return;
             }
 
             response.end(JSON.stringify(user));
         });
     }else {
-    response.status(400).send('Not found');
+    response.status(400).send('User id is not in right format');
     return;
 
     }
@@ -203,61 +203,60 @@ app.get('/photosOfUser/:id', function (request, response) {
     */
 
     if (id.match(/^[0-9a-fA-F]{24}$/)) {
-        var photoClone;
-
+        var photoListCopy;
         Photo.find({user_id: id}, {__v: 0}, function (err, photoList) {
             if (err) {
-                console.error('Doing /photo/id error:', err);
+                console.error('Doing /photosOfUser/:id error:', err);
                 response.status(400).send(JSON.stringify(err));
                 return;
             }
             if (photoList === null) {
                 console.log('Photos for user with _id:' + id + ' not found.');
-                response.status(400).send('Not found');
+                response.status(400).send('Photo not found');
                 return;
             }
 
-            photoClone = JSON.parse(JSON.stringify(photoList));
+            photoListCopy = JSON.parse(JSON.stringify(photoList));
 
-            async.each(photoClone, function (photo, done_callback_photo) {
-                async.each(photo.comments, function (comment, done_callback_comment) {
-                    var userId = comment.user_id;
-                    var corresUser = {};
-                    User.findOne({_id: userId}, function (err, user) {
+            async.each(photoList, function (photo, callback_photo) {
+                async.each(photo.comments, function (comment, callback_comment) {
+                    //var userId = comment.user_id;
+                    var userObject = {};
+                    User.findOne({_id: comment.user_id}, function (err, user) {
                         if (err) {
-                            console.error('Doing /user/list error:', err);
+                            console.error('Doing /photosOfUser/:id error:', err);
                             response.status(400).send(JSON.stringify(err));
                             return;
                         }
                         if (user === null) {
-                            response.status(400).send('Missing User');
+                            response.status(400).send('Missing user');
                             return;
                         }
-                        corresUser._id = user.id;
-                        corresUser.first_name = user.first_name;
-                        corresUser.last_name = user.last_name;
+                        userObject._id = user.id;
+                        userObject.first_name = user.first_name;
+                        userObject.last_name = user.last_name;
 
-                        comment.user = corresUser;
+                        comment.user = userObject;
                         delete comment.user_id;
-                        done_callback_comment(err);
+                        callback_comment(err);
                     });
                 }, function (err) {
                     if (err) {
                         response.status(400).send(JSON.stringify(err));
                     } 
-                    done_callback_photo(err);
+                    callback_photo(err);
                 });
             }, function (err) {
                 if (err) {
                         response.status(400).send(JSON.stringify(err));
                     } 
                 else {
-                    response.status(200).send(photoClone);
+                    response.status(200).send(photoListCopy);
                 }
             });
         });
     }else {
-    response.status(400).send('Not found');
+    response.status(400).send('User id is not in good format');
     return;
 
     }
