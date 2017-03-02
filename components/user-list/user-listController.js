@@ -12,7 +12,7 @@ cs142App.controller('UserListController', ['$scope', '$resource',
             });
         });*/
 
-        var userList = $resource('http://localhost:3000/user/list', {}, {'query': {method: 'GET'}});
+        var userList = $resource('http://localhost:3000/user/list', {}, {'query': {method: 'GET', isArray : true}});
         var object = userList.query({}, function() {
             object.$query();
             $scope.nameList = object;
