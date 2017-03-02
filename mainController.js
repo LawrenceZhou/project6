@@ -56,7 +56,7 @@ cs142App.controller('MainController', ['$scope', '$resource',
             xhr.send();
         };
 
-        var version = $resource('http://localhost:3000/test/:param', {param: 'info'}, {'get': {method: 'GET'}});
+        var version = $resource('http://localhost:3000/test/:param', {param: 'info'}, {'get': {method: 'GET'}, save: {method: 'GET'}});
         var object = version.get({param: 'info'}, function() {
             object.$save();
         });
