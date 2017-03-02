@@ -61,7 +61,7 @@ cs142App.controller('MainController', ['$scope', '$resource',
             object.$save();
         });
         console.log(object);
-        $scope.main.version = JSON.parse(JSON.stringify(object.version));
+        $scope.main.version = JSON.parse(JSON.stringify(object)).__v;
 
 
         /*$scope.FetchModel("http://localhost:3000/test/info", function(model){
