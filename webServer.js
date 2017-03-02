@@ -218,11 +218,8 @@ app.get('/photosOfUser/:id', function (request, response) {
 
             photoListCopy = JSON.parse(JSON.stringify(photoList));
             for (var i = 0;i< photoListCopy.length; i++) {
-                console.log(photoListCopy[i].date_time);
                 var dt = new Date(photoListCopy[i].date_time);
-                console.log(dt);
                 photoListCopy[i].date_time = dt.toLocaleString();
-                console.log(photoListCopy[i].date_time);
             }
 
             async.each(photoListCopy, function (photo, callback_photo) {
@@ -244,6 +241,10 @@ app.get('/photosOfUser/:id', function (request, response) {
 
                         comment.user = userObject;
                         delete comment.user_id;
+                        var c_dt = new Date(comment.date_time);
+                        comment.date_time = c_dt.toLocaleString();
+                        
+
                         callback_comment(err);
                     });
                 }, function (err) {
