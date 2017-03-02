@@ -17,9 +17,9 @@ cs142App.controller('UserPhotosController', ['$scope', '$routeParams', '$resourc
     });*/
 
     var photo = $resource('http://localhost:3000/photosOfUser/'+userId, {}, {'query': {method: 'GET', isArray : true}});
-        var object = photo.query({}, function() {
-            $scope.photos = object;
-            console.log(object, $scope.photos);
+        var photoList = photo.query({}, function() {
+            $scope.photos = photoList;
+            console.log(photoList, $scope.photos);
         });
 
 
