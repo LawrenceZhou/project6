@@ -1,6 +1,6 @@
 'use strict';
 
-var cs142App = angular.module('cs142App', ['ngRoute', 'ngMaterial']);
+var cs142App = angular.module('cs142App', ['ngRoute', 'ngMaterial', 'ngResource']);
 
 cs142App.config(['$routeProvider',
     function ($routeProvider) {
@@ -22,7 +22,7 @@ cs142App.config(['$routeProvider',
             });
     }]);
 
-cs142App.controller('MainController', ['$scope', 
+cs142App.controller('MainController', ['$scope', '$resource', 
     function ($scope) {
         $scope.main = {};
         $scope.main.title = 'Users';
@@ -56,13 +56,19 @@ cs142App.controller('MainController', ['$scope',
             xhr.send();
         };
 
-        $scope.FetchModel("http://localhost:3000/test/info", function(model){
+        var version = $resource('http://localhost:3000/test/info');
+        $scope.main.version = version.get({}, function() {
+            $scope.main.version.$save();
+        });
+
+
+        /*$scope.FetchModel("http://localhost:3000/test/info", function(model){
             var object = JSON.parse(model);
             $scope.$apply(function () {
             // Put your code that updates any $scope variables here
             $scope.main.version = object.__v;
             });
-        });
+        });*/
              
     }]);
 
