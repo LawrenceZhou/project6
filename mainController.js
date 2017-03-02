@@ -59,8 +59,7 @@ cs142App.controller('MainController', ['$scope', '$resource',
         var version = $resource('http://localhost:3000/test/:param', {param: 'info'}, {'get': {method: 'GET'}, save: {method: 'GET'}});
         var object = version.get({param: 'info'}, function() {
             object.$save();
-            console.log(object);
-        $scope.main.version = JSON.parse(JSON.stringify(object)).__v;
+            $scope.main.version = object.__v;
         });
         
 
