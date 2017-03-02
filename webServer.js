@@ -217,9 +217,10 @@ app.get('/photosOfUser/:id', function (request, response) {
             }
 
             photoListCopy = JSON.parse(JSON.stringify(photoList));
-            /*for (var p in photoListCopy) {
-                p.date_time = p.date_time.toLocalString();
-            }*/
+            for (var p in photoListCopy) {
+                console.log(p.date_time, p,date_time.type);
+                //p.date_time = p.date_time.toLocalString();
+            }
 
             async.each(photoListCopy, function (photo, callback_photo) {
                 async.each(photo.comments, function (comment, callback_comment) {
