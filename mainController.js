@@ -60,6 +60,7 @@ cs142App.controller('MainController', ['$scope', '$resource',
         var object = version.get({param: 'info'}, function() {
             object.$save();
         });
+        console.log(object);
         $scope.main.version = object.version;
 
 
