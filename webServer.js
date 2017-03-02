@@ -220,7 +220,6 @@ app.get('/photosOfUser/:id', function (request, response) {
 
             async.each(photoList, function (photo, callback_photo) {
                 async.each(photo.comments, function (comment, callback_comment) {
-                    //var userId = comment.user_id;
                     var userObject = {};
                     User.findOne({_id: comment.user_id}, function (err, user) {
                         if (err) {

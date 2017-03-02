@@ -36,7 +36,7 @@ cs142App.controller('MainController', ['$scope', '$resource',
       *                  objectcontaining the model. model is undefined in 
       *                  the error case.
       */
-        $scope.FetchModel = function(url, doneCallback) {
+        /*$scope.FetchModel = function(url, doneCallback) {
             var  xhrHandler = function() {
                 //Don’t do anything if not final state
                 if (this.readyState!== 4){ 
@@ -54,7 +54,7 @@ cs142App.controller('MainController', ['$scope', '$resource',
             xhr.onreadystatechange = xhrHandler;
             xhr.open("GET", url);
             xhr.send();
-        };
+        };*/
 
 
         /*$scope.FetchModel("http://localhost:3000/test/info", function(model){
