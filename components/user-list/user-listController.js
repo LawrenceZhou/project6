@@ -15,6 +15,7 @@ cs142App.controller('UserListController', ['$scope', '$resource',
         var userList = $resource('http://localhost:3000/user/list', {}, {'query': {method: 'GET', isArray : true}});
         var object = userList.query({}, function() {
             $scope.nameList = object;
+            console.log(object);
         });
 
         //console.log('window.cs142models.userListModel()', window.cs142models.userListModel());
