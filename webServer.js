@@ -217,11 +217,11 @@ app.get('/photosOfUser/:id', function (request, response) {
             }
 
             photoListCopy = JSON.parse(JSON.stringify(photoList));
-            for (var p in photoListCopy) {
+            /*for (var p in photoListCopy) {
                 p.date_time = p.date_time.toLocalString();
-            }
+            }*/
 
-            async.each(photoList, function (photo, callback_photo) {
+            async.each(photoListCopy, function (photo, callback_photo) {
                 async.each(photo.comments, function (comment, callback_comment) {
                     var userObject = {};
                     User.findOne({_id: comment.user_id}, function (err, user) {
