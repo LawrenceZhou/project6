@@ -252,7 +252,6 @@ app.get('/photosOfUser/:id', function (request, response) {
                         response.status(400).send(JSON.stringify(err));
                     } 
                 else {
-                    console.log(photoClone);
                     response.status(200).send(photoClone);
                 }
             });
