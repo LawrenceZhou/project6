@@ -8,13 +8,20 @@ cs142App.controller('UserPhotosController', ['$scope', '$routeParams', '$resourc
      */
     var userId = $routeParams.userId;
     //$scope.user = window.cs142models.userModel(userId);
-    $scope.FetchModel("http://localhost:3000/photosOfUser/" + userId, function(model){
+    /*$scope.FetchModel("http://localhost:3000/photosOfUser/" + userId, function(model){
         var object = JSON.parse(model);
         $scope.$apply(function () {
             // Put your code that updates any $scope variables here
             $scope.photos = object;
         });
-    });
+    });*/
+
+    var photo = $resource('http://localhost:3000/photosOfUser/:id', {}, {});
+        var object = photo.get({id: userId}, function() {
+            $scope.photos = object;
+        });
+
+
 
     //$scope.photos = window.cs142models.photoOfUserModel(userId);
     /*$scope.FetchModel("http://localhost:3000/user/" + userId, function(model){
