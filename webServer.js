@@ -43,9 +43,6 @@ var SchemaInfo = require('./schema/schemaInfo.js');
 var express = require('express');
 var app = express();
 
-// XXX - Your submission should work without this line
-//var cs142models = require('./modelData/photoApp.js').cs142models;
-
 mongoose.connect('mongodb://localhost/cs142project6');
 
 // We have the express static module (http://expressjs.com/en/starter/static-files.html) do all
@@ -155,13 +152,6 @@ app.get('/user/list', function (request, response) {
  */
 app.get('/user/:id', function (request, response) {
     var id = request.params.id;
-    /*var user = cs142models.userModel(id);
-    if (user === null) {
-        console.log('User with _id:' + id + ' not found.');
-        response.status(400).send('Not found');
-        return;
-    }
-    response.status(200).send(user);*/
 
     // Fetch the SchemaInfo. There should only one of them. The query of {} will match it.
     if (id.match(/^[0-9a-fA-F]{24}$/)) {
@@ -193,14 +183,6 @@ app.get('/user/:id', function (request, response) {
  */
 app.get('/photosOfUser/:id', function (request, response) {
     var id = request.params.id;
-    /*var photos = cs142models.photoOfUserModel(id);
-    if (photos.length === 0) {
-        console.log('Photos for user with _id:' + id + ' not found.');
-        response.status(400).send('Not found');
-        return;
-    }
-    response.status(200).send(photos);
-    */
 
     if (id.match(/^[0-9a-fA-F]{24}$/)) {
         var photoListCopy;
