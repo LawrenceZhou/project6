@@ -217,7 +217,7 @@ app.get('/photosOfUser/:id', function (request, response) {
                             response.status(400).send('Missing user');
                             return;
                         }
-                        userObject._id = user.id;
+                        userObject._id = user._id;
                         userObject.first_name = user.first_name;
                         userObject.last_name = user.last_name;
 
